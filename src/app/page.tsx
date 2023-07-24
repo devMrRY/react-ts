@@ -2,7 +2,8 @@
 // any window side work need to add "use client";
 "use client";
 import { AppProps } from 'next/app';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import Sidebar from './Sidebar/page';
 
 type Geo = {
   geo: {
@@ -33,9 +34,13 @@ type Error = {
   status: number;
 }
 
-const Home: React.FC<AppProps> = (props) => {
+type Props = {
+}
+
+const Home: React.FC<Props> = (props) => {
   const [click, setClicks] = useState<number>(0);
   const [data, setData] = useState<Array<User>>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const getData = async (): Promise<void> => {
     try {
@@ -50,8 +55,13 @@ const Home: React.FC<AppProps> = (props) => {
     }
   }
 
-  const fetchData = (e: React.SyntheticEvent): void => {
+  const handleSubmit = (e: React.SyntheticEvent): void => {
     setClicks(prev => ++prev);
+    if (inputRef.current?.value)
+      inputRef.current.value = "";
+  }
+
+  const fetchData = (e: React.SyntheticEvent): void => {
     getData();
   }
 
@@ -62,13 +72,14 @@ const Home: React.FC<AppProps> = (props) => {
       </h1>
       <p>click: {click}</p>
       <button onClick={fetchData}>fetch Data</button>
+      <Sidebar handleClick={setClicks} handleSubmit={handleSubmit} inputRef={inputRef} />
 
       {data.map(item => (
         <div>
           <p>Name: {item.name}</p>
           <p>Email: {item.email}</p>
           <p>Website: {item.address.geo.lat}</p>
-          <p>Website: {item.address.name}</p>
+          <p>Website: {item.address.city}</p>
           <hr />
         </div>
       ))}
