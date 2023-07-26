@@ -53,7 +53,7 @@ let resp2: ApiResponse = {
   status: 200,
   data: {
     name: "rahul",
-    test: 23,
+    id: 3,
   }
 }
 
