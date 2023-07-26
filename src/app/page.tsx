@@ -36,15 +36,36 @@ type Error = {
 
 type Props = {};
 
+type data = {
+  name: string
+} | {[k: string]: number};
+
+type ApiResponse =
+  | { status: 200; data: data }
+  | { status: number } & Error;
+
+let resp: ApiResponse = {
+  status: 500,
+  message: "Error message"
+}
+
+let resp2: ApiResponse = {
+  status: 200,
+  data: {
+    name: "rahul",
+    test: 23,
+  }
+}
+
 const timer = (num: number): Promise<number> => {
   return new Promise<number>((res, rej) => {
     setTimeout(() => {
       res(0);
-    }, num*1000)
-  })
-}
+    }, num * 1000);
+  });
+};
 
-function callTimer(): Promise<number>{
+function callTimer(): Promise<number> {
   return timer(5);
 }
 
