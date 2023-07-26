@@ -2,7 +2,7 @@
 // any window side work need to add "use client";
 "use client";
 import { AppProps } from "next/app";
-import { useRef, useState } from "react";
+import { ElementRef, useRef, useState } from "react";
 import Sidebar from "./Sidebar/page";
 
 type Geo = {
@@ -36,10 +36,22 @@ type Error = {
 
 type Props = {};
 
+const timer = (num: number): Promise<number> => {
+  return new Promise<number>((res, rej) => {
+    setTimeout(() => {
+      res(0);
+    }, num*1000)
+  })
+}
+
+function callTimer(): Promise<number>{
+  return timer(5);
+}
+
 const Home: React.FC<Props> = (props) => {
   const [click, setClicks] = useState<number>(0);
   const [data, setData] = useState<Array<User>>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<ElementRef<"input">>(null);
 
   const getData = async (): Promise<void> => {
     try {
@@ -49,7 +61,10 @@ const Home: React.FC<Props> = (props) => {
       if (users.length) {
         setData(users);
       }
+      callTimer();
     } catch (error: unknown) {
+      // unknown just like any can store anything but unknown can't be assign to anything unlike any
+      // any disables type checking at compile time
       if (error instanceof Error) {
         console.log(error.message);
       }
