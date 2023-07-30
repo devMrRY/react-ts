@@ -1,0 +1,10 @@
+body {
+    margin: 0
+}
+
+.navbar {
+    background-color: deepskyblue;
+    color: black;
+    padding: 15px 10px;
+    font-weight: 600;
+}

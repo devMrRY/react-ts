@@ -4,6 +4,25 @@
 import { AppProps } from "next/app";
 import { ElementRef, useRef, useState } from "react";
 import Sidebar from "./Sidebar/page";
+import { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: 'My Home Page',
+}
+
+type t1 =  {
+  fun: (name: string) => string;
+} & { fun: (name: string) => number; }
+
+let t: t1['fun'] = (a: string) => a;
+
+
+type t2 =  {
+  name: string;
+} & { name: number; }
+
+// Type 'number' | 'string' is not assignable to type 'never'.
+let t22: t2['name'] = 22;
 
 type Geo = {
   geo: {

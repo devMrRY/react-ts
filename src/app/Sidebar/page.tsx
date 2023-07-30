@@ -1,3 +1,4 @@
+"use client";
 import { SyntheticEvent } from "react";
 
 type Props = {
@@ -5,6 +6,8 @@ type Props = {
   handleSubmit: <T extends SyntheticEvent>(e: T) => void;
   inputRef: React.Ref<HTMLInputElement>;
 };
+
+type SidebarProps = React.ComponentProps<typeof Sidebar>
 
 type GetFunctProps<T> = (...args: T[]) => void;
 
@@ -15,6 +18,7 @@ type extract<T> = {
 type typeApiCall<T> = T extends (...args: infer Args) => void ? (...cb: Args) => void : never;
 
 type MyFunc<T> =  T extends (...args: infer Arg) => any ? (...args: Arg) => Arg[0] : never;
+
 
 const Sidebar: React.FC<Props> = (props) => {
   function apiCall<T extends (...args: any) => any>(cb: MyFunc<T>): ReturnType<T> {
